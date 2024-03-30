@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyecto1.web.dto.arrendador_dto;
 import com.proyecto1.web.dto.arrendatario_dto;
 import com.proyecto1.web.services.arrendatario_service;
 
