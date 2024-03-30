@@ -44,11 +44,15 @@ public class propiedad_service {
     //SAVE PROPIEDAD
     public propiedad_dto save(propiedad_dto propiedad_dto){
         propiedad propiedad = modelMapper.map(propiedad_dto, propiedad.class);
+        propiedad = propiedad_repository.save(propiedad);
         return modelMapper.map(propiedad, propiedad_dto.class);
     }
 
     //UPDATE PROPIEDAD
     public propiedad_dto update(propiedad_dto propiedad_dto){
+        if(propiedad_dto.getId_propiedad() == 0){
+            throw new IllegalArgumentException("No se ha ingresado un ID valido");
+        }
         propiedad propiedad = modelMapper.map(propiedad_dto, propiedad.class);
         propiedad = propiedad_repository.save(propiedad);
         return modelMapper.map(propiedad, propiedad_dto.class);

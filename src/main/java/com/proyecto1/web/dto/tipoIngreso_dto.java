@@ -15,6 +15,6 @@ import lombok.Setter;
 public class tipoIngreso_dto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long tipoIngreso;
+    private long id_tipoIngreso;
     private String tipo;
 }

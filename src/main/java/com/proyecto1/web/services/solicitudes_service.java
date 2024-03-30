@@ -44,11 +44,15 @@ public class solicitudes_service {
     //SAVE SOLICITUDES
     public solicitudes_dto save(solicitudes_dto solicitudes_dto){
         solicitudes solicitudes = modelMapper.map(solicitudes_dto, solicitudes.class);
+        solicitudes = solicitudes_repository.save(solicitudes);
         return modelMapper.map(solicitudes, solicitudes_dto.class);
     }
 
     //UPDATE SOLICITUDES
     public solicitudes_dto update(solicitudes_dto solicitudes_dto){
+        if(solicitudes_dto.getId_solicitud() == 0){
+            throw new IllegalArgumentException("No se ha ingresado un ID valido");
+        }
         solicitudes solicitudes = modelMapper.map(solicitudes_dto, solicitudes.class);
         solicitudes = solicitudes_repository.save(solicitudes);
         return modelMapper.map(solicitudes, solicitudes_dto.class);

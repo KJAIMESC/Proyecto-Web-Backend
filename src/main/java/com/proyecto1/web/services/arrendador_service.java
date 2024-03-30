@@ -45,11 +45,15 @@ public class arrendador_service {
     //SAVE ARRENDADOR
     public arrendador_dto save(arrendador_dto arrendador_dto){
         arrendador arrendador = modelMapper.map(arrendador_dto, arrendador.class);
+        arrendador = arrendador_repository.save(arrendador);
         return modelMapper.map(arrendador, arrendador_dto.class);
     }
 
     //UPDATE ARRENDADOR
     public arrendador_dto update(arrendador_dto arrendador_dto){
+        if(arrendador_dto.getId_arrendador() == 0){
+            throw new IllegalArgumentException("No se ha ingresado un ID valido");
+        }
         arrendador arrendador = modelMapper.map(arrendador_dto, arrendador.class);
         arrendador = arrendador_repository.save(arrendador);
         return modelMapper.map(arrendador, arrendador_dto.class);

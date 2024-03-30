@@ -44,11 +44,15 @@ public class EstadoSolicitud_service {
     //SAVE ESTADO SOLICITUD
     public EstadoSolicitud_dto save(EstadoSolicitud_dto estadoSolicitud_dto){
         EstadoSolicitud estadoSolicitud = modelMapper.map(estadoSolicitud_dto, EstadoSolicitud.class);
+        estadoSolicitud = estadoSolicitud_repository.save(estadoSolicitud);
         return modelMapper.map(estadoSolicitud, EstadoSolicitud_dto.class);
     }
 
     //UPDATE ESTADO SOLICITUD
-    public EstadoSolicitud_dto update(EstadoSolicitud_dto estadoSolicitud_dto){
+    public EstadoSolicitud_dto update(EstadoSolicitud_dto estadoSolicitud_dto) {
+        if (estadoSolicitud_dto.getId_EstadoSolicitud() == 0) {
+            throw new IllegalArgumentException("No se ha ingresado un ID valido");
+        }
         EstadoSolicitud estadoSolicitud = modelMapper.map(estadoSolicitud_dto, EstadoSolicitud.class);
         estadoSolicitud = estadoSolicitud_repository.save(estadoSolicitud);
         return modelMapper.map(estadoSolicitud, EstadoSolicitud_dto.class);

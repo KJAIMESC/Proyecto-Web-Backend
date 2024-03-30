@@ -43,11 +43,15 @@ public class tipoIngreso_service {
     //SAVE TIPOINGRESO
     public tipoIngreso_dto save(tipoIngreso_dto tipoIngreso_dto){
         tipoIngreso tipoIngreso = modelMapper.map(tipoIngreso_dto, tipoIngreso.class);
+        tipoIngreso = tipoIngreso_repository.save(tipoIngreso);
         return modelMapper.map(tipoIngreso, tipoIngreso_dto.class);
     }
 
     //UPDATE TIPOINGRESO
     public tipoIngreso_dto update(tipoIngreso_dto tipoIngreso_dto){
+        if(tipoIngreso_dto.getId_tipoIngreso() == 0){
+            throw new IllegalArgumentException("No se ha ingresado un ID valido");
+        }
         tipoIngreso tipoIngreso = modelMapper.map(tipoIngreso_dto, tipoIngreso.class);
         tipoIngreso = tipoIngreso_repository.save(tipoIngreso);
         return modelMapper.map(tipoIngreso, tipoIngreso_dto.class);
