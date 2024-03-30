@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto1.web.dto.tipoIngreso_dto;
+import com.proyecto1.web.services.tipoIngreso_service;
 
 @RestController
 @RequestMapping(value = "/api/grupo1_6/proyecto1/tipoIngreso")
-public class tipoIngreso_service {
+public class tipoIngreso_controller {
     tipoIngreso_service tipoIngreso_service;
 
     @Autowired
-    public tipoIngreso_service(tipoIngreso_service tipoIngreso_service) {
+    public tipoIngreso_controller(tipoIngreso_service tipoIngreso_service) {
         this.tipoIngreso_service = tipoIngreso_service;
     }
 
