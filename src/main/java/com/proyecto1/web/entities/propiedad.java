@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +30,12 @@ public class propiedad {
     private int cantidadBanos;
     private boolean permitidoMascotas;
     private boolean piscina;
-    private int valorNoche;
+    private double valorNoche;
     private boolean activado;
+    @ManyToOne
+    @JoinColumn(name = "id_tipoIngreso_FK")
+    private tipoIngreso tipoIngreso;
+    @ManyToOne
+    @JoinColumn(name = "id_arrendatario_FK")
+    private arrendador arrendador;
 }

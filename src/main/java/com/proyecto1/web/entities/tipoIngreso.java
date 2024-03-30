@@ -1,7 +1,6 @@
 package com.proyecto1.web.entities;
 
 import jakarta.annotation.Generated;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,16 +15,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class arrendatario {
+public class tipoIngreso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_arrendatario;
-    private String nombres;
-    private String apellidos;
-    @Column(unique = true)
-    private String correo;
-    private String telefono;
-    private String contrasena;
-    @Column(nullable = false)
-    private boolean activado = false;
+    private long tipoIngreso;
+    private String tipo;
 }

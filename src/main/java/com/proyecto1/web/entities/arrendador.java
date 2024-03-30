@@ -1,6 +1,7 @@
 package com.proyecto1.web.entities;
 
 import jakarta.annotation.Generated;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,8 +22,10 @@ public class arrendador {
     private long id_arrendador;
     private String nombres;
     private String apellidos;
+    @Column(unique = true)
     private String correo;
     private String telefono;
     private String contrasena;
-    private boolean activado;
+    @Column(nullable = false)
+    private boolean activado = false;
 }
