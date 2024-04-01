@@ -50,7 +50,7 @@ public class EstadoSolicitud_service {
 
     //UPDATE ESTADO SOLICITUD
     public EstadoSolicitud_dto update(EstadoSolicitud_dto estadoSolicitud_dto) {
-        if (estadoSolicitud_dto.getId_EstadoSolicitud() == 0) {
+        if (estadoSolicitud_dto.getId_EstadoSolicitud() == 0 || !estadoSolicitud_repository.existsById(estadoSolicitud_dto.getId_EstadoSolicitud())) {
             throw new IllegalArgumentException("No se ha ingresado un ID valido");
         }
         EstadoSolicitud estadoSolicitud = modelMapper.map(estadoSolicitud_dto, EstadoSolicitud.class);

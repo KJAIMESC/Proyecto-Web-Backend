@@ -50,7 +50,7 @@ public class arrendatario_service {
 
     //UPDATE ARRENDATARIO
     public arrendatario_dto update(arrendatario_dto arrendatario_dto){
-        if(arrendatario_dto.getId_arrendatario() == 0){
+        if(arrendatario_dto.getId_arrendatario() == 0 || !arrendatario_repository.existsById(arrendatario_dto.getId_arrendatario())){
             throw new IllegalArgumentException("No se ha ingresado un ID valido");
         }
         arrendatario arrendatario = modelMapper.map(arrendatario_dto, arrendatario.class);

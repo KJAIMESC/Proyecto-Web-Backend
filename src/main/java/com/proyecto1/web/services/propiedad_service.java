@@ -50,7 +50,7 @@ public class propiedad_service {
 
     //UPDATE PROPIEDAD
     public propiedad_dto update(propiedad_dto propiedad_dto){
-        if(propiedad_dto.getId_propiedad() == 0){
+        if(propiedad_dto.getId_propiedad() == 0 || !propiedad_repository.existsById(propiedad_dto.getId_propiedad())){
             throw new IllegalArgumentException("No se ha ingresado un ID valido");
         }
         propiedad propiedad = modelMapper.map(propiedad_dto, propiedad.class);

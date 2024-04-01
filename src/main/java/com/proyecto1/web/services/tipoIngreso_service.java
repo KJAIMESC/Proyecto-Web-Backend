@@ -49,7 +49,7 @@ public class tipoIngreso_service {
 
     //UPDATE TIPOINGRESO
     public tipoIngreso_dto update(tipoIngreso_dto tipoIngreso_dto){
-        if(tipoIngreso_dto.getId_tipoIngreso() == 0){
+        if(tipoIngreso_dto.getId_tipoIngreso() == 0 || !tipoIngreso_repository.existsById(tipoIngreso_dto.getId_tipoIngreso())){
             throw new IllegalArgumentException("No se ha ingresado un ID valido");
         }
         tipoIngreso tipoIngreso = modelMapper.map(tipoIngreso_dto, tipoIngreso.class);

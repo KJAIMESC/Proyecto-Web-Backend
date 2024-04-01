@@ -50,7 +50,7 @@ public class solicitudes_service {
 
     //UPDATE SOLICITUDES
     public solicitudes_dto update(solicitudes_dto solicitudes_dto){
-        if(solicitudes_dto.getId_solicitud() == 0){
+        if(solicitudes_dto.getId_solicitud() == 0 || !solicitudes_repository.existsById(solicitudes_dto.getId_solicitud())){
             throw new IllegalArgumentException("No se ha ingresado un ID valido");
         }
         solicitudes solicitudes = modelMapper.map(solicitudes_dto, solicitudes.class);
