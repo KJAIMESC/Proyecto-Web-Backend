@@ -26,12 +26,10 @@ public class EstadoSolicitud_service {
     //GET BY ID
     public EstadoSolicitud_dto get(Long id) {
         Optional<EstadoSolicitud> estadoSolicitud_optional = estadoSolicitud_repository.findById(id);
-        EstadoSolicitud_dto estadoSolicitud_dto = null;
-        if(estadoSolicitud_optional.isPresent()) {
-            EstadoSolicitud estadoSolicitud = estadoSolicitud_optional.get();
-            estadoSolicitud_dto = modelMapper.map(estadoSolicitud, EstadoSolicitud_dto.class);
+        if (!estadoSolicitud_optional.isPresent()) {
+            throw new IllegalArgumentException("El Estado de Solicitud con ID: " + id + " no existe");
         }
-        return estadoSolicitud_dto;
+        return modelMapper.map(estadoSolicitud_optional.get(), EstadoSolicitud_dto.class);
     }
 
     //RETURN ESTADO SOLICITUD LIST
@@ -50,8 +48,8 @@ public class EstadoSolicitud_service {
 
     //UPDATE ESTADO SOLICITUD
     public EstadoSolicitud_dto update(EstadoSolicitud_dto estadoSolicitud_dto) {
-        if (estadoSolicitud_dto.getId_EstadoSolicitud() == 0 || !estadoSolicitud_repository.existsById(estadoSolicitud_dto.getId_EstadoSolicitud())) {
-            throw new IllegalArgumentException("No se ha ingresado un ID valido");
+        if (!estadoSolicitud_repository.existsById(estadoSolicitud_dto.getId_EstadoSolicitud())) {
+            throw new IllegalArgumentException("El Estado de Solicitud con ID: " + estadoSolicitud_dto.getId_EstadoSolicitud() + " no existe");
         }
         EstadoSolicitud estadoSolicitud = modelMapper.map(estadoSolicitud_dto, EstadoSolicitud.class);
         estadoSolicitud = estadoSolicitud_repository.save(estadoSolicitud);
@@ -60,7 +58,9 @@ public class EstadoSolicitud_service {
 
     //DELETE ESTADO SOLICITUD BY ID
     public void delete(Long id){
+        if (!estadoSolicitud_repository.existsById(id)) {
+            throw new IllegalArgumentException("El Estado de Solicitud con ID: " + id + " no existe y por lo tanto no puede ser eliminado");
+        }
         estadoSolicitud_repository.deleteById(id);
     }
-
 }

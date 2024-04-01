@@ -23,44 +23,47 @@ public class propiedad_service {
         this.modelMapper = modelMapper;
     }
 
-    //GET BY ID
+    // GET BY ID
     public propiedad_dto get(Long id) {
         Optional<propiedad> propiedad_optional = propiedad_repository.findById(id);
-        propiedad_dto propiedad_dto = null;
-        if(propiedad_optional.isPresent()) {
-            propiedad propiedad = propiedad_optional.get();
-            propiedad_dto = modelMapper.map(propiedad, propiedad_dto.class);
+        // ERROR HANDLING FOR INVALID ID
+        if (!propiedad_optional.isPresent()) {
+            throw new IllegalArgumentException("La propiedad con ID: " + id + " no existe");
         }
-        return propiedad_dto;
+        return modelMapper.map(propiedad_optional.get(), propiedad_dto.class);
     }
 
-    //RETURN PROPIEDAD LIST
-    public List<propiedad_dto> getAll( ){
+    // RETURN PROPIEDAD LIST
+    public List<propiedad_dto> getAll() {
         List<propiedad> propiedadList = (List<propiedad>) propiedad_repository.findAll();
         List<propiedad_dto> propiedad_dtoList = propiedadList.stream().map(propiedad -> modelMapper.map(propiedad, propiedad_dto.class)).collect(Collectors.toList());
         return propiedad_dtoList;
     }
 
-    //SAVE PROPIEDAD
-    public propiedad_dto save(propiedad_dto propiedad_dto){
+    // SAVE PROPIEDAD
+    public propiedad_dto save(propiedad_dto propiedad_dto) {
         propiedad propiedad = modelMapper.map(propiedad_dto, propiedad.class);
         propiedad = propiedad_repository.save(propiedad);
         return modelMapper.map(propiedad, propiedad_dto.class);
     }
 
-    //UPDATE PROPIEDAD
-    public propiedad_dto update(propiedad_dto propiedad_dto){
-        if(propiedad_dto.getId_propiedad() == 0 || !propiedad_repository.existsById(propiedad_dto.getId_propiedad())){
-            throw new IllegalArgumentException("No se ha ingresado un ID valido");
+    // UPDATE PROPIEDAD
+    public propiedad_dto update(propiedad_dto propiedad_dto) {
+        // ERROR HANDLING FOR INVALID ID
+        if (!propiedad_repository.existsById(propiedad_dto.getId_propiedad())) {
+            throw new IllegalArgumentException("La propiedad con ID: " + propiedad_dto.getId_propiedad() + " no existe");
         }
         propiedad propiedad = modelMapper.map(propiedad_dto, propiedad.class);
         propiedad = propiedad_repository.save(propiedad);
         return modelMapper.map(propiedad, propiedad_dto.class);
     }
 
-    //DELETE PROPIEDAD BY ID
-    public void delete(Long id){
+    // DELETE PROPIEDAD BY ID
+    public void delete(Long id) {
+        // ERROR HANDLING FOR INVALID ID
+        if (!propiedad_repository.existsById(id)) {
+            throw new IllegalArgumentException("La propiedad con ID: " + id + " no existe y por lo tanto no puede ser eliminada");
+        }
         propiedad_repository.deleteById(id);
     }
-
 }
