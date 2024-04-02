@@ -25,12 +25,11 @@ public class tipoIngreso_service {
     //GET BY ID
     public tipoIngreso_dto get(Long id) {
         Optional<tipoIngreso> tipoIngreso_optional = tipoIngreso_repository.findById(id);
-        tipoIngreso_dto tipoIngreso_dto = null;
-        if(tipoIngreso_optional.isPresent()) {
-            tipoIngreso tipoIngreso = tipoIngreso_optional.get();
-            tipoIngreso_dto = modelMapper.map(tipoIngreso, tipoIngreso_dto.class);
+        //ERROR HANDLING FOR INVALID ID
+        if (!tipoIngreso_optional.isPresent()) {
+            throw new IllegalArgumentException("El tipo de ingreso con ID: " + id + " no existe");
         }
-        return tipoIngreso_dto;
+        return modelMapper.map(tipoIngreso_optional.get(), tipoIngreso_dto.class);
     }
 
     //RETURN TIPOINGRESO LIST
@@ -49,7 +48,8 @@ public class tipoIngreso_service {
 
     //UPDATE TIPOINGRESO
     public tipoIngreso_dto update(tipoIngreso_dto tipoIngreso_dto){
-        if(tipoIngreso_dto.getId_tipoIngreso() == 0 || !tipoIngreso_repository.existsById(tipoIngreso_dto.getId_tipoIngreso())){
+        //ERROR HANDLING FOR INVALID ID
+        if(!tipoIngreso_repository.existsById(tipoIngreso_dto.getId_tipoIngreso())){
             throw new IllegalArgumentException("No se ha ingresado un ID valido");
         }
         tipoIngreso tipoIngreso = modelMapper.map(tipoIngreso_dto, tipoIngreso.class);
@@ -59,6 +59,10 @@ public class tipoIngreso_service {
 
     //DELETE TIPOINGRESO BY ID
     public void delete(Long id){
+        //ERROR HANDLING FOR INVALID ID
+        if(!tipoIngreso_repository.existsById(id)){
+            throw new IllegalArgumentException("No se ha ingresado un ID valido");
+        }
         tipoIngreso_repository.deleteById(id);
     }
 }

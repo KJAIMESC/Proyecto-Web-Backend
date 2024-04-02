@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.proyecto1.web.dto.propiedad_dto;
 import com.proyecto1.web.entities.propiedad;
@@ -14,8 +15,9 @@ import com.proyecto1.web.repositories.propiedad_repository;
 
 @Service
 public class propiedad_service {
-    propiedad_repository propiedad_repository;
-    ModelMapper modelMapper;
+
+    private propiedad_repository propiedad_repository;
+    private ModelMapper modelMapper;
 
     @Autowired
     public propiedad_service(propiedad_repository propiedad_repository, ModelMapper modelMapper) {
@@ -24,16 +26,20 @@ public class propiedad_service {
     }
 
     // GET BY ID
+    @Transactional
     public propiedad_dto get(Long id) {
         Optional<propiedad> propiedad_optional = propiedad_repository.findById(id);
         // ERROR HANDLING FOR INVALID ID
         if (!propiedad_optional.isPresent()) {
             throw new IllegalArgumentException("La propiedad con ID: " + id + " no existe");
         }
-        return modelMapper.map(propiedad_optional.get(), propiedad_dto.class);
+
+        propiedad propiedadEntity = propiedad_optional.get();
+        return modelMapper.map(propiedadEntity, propiedad_dto.class);
     }
 
     // RETURN PROPIEDAD LIST
+    @Transactional
     public List<propiedad_dto> getAll() {
         List<propiedad> propiedadList = (List<propiedad>) propiedad_repository.findAll();
         List<propiedad_dto> propiedad_dtoList = propiedadList.stream().map(propiedad -> modelMapper.map(propiedad, propiedad_dto.class)).collect(Collectors.toList());
@@ -41,13 +47,15 @@ public class propiedad_service {
     }
 
     // SAVE PROPIEDAD
+    @Transactional
     public propiedad_dto save(propiedad_dto propiedad_dto) {
         propiedad propiedad = modelMapper.map(propiedad_dto, propiedad.class);
         propiedad = propiedad_repository.save(propiedad);
         return modelMapper.map(propiedad, propiedad_dto.class);
-    }
+    } 
 
     // UPDATE PROPIEDAD
+    @Transactional
     public propiedad_dto update(propiedad_dto propiedad_dto) {
         // ERROR HANDLING FOR INVALID ID
         if (!propiedad_repository.existsById(propiedad_dto.getId_propiedad())) {
@@ -59,6 +67,7 @@ public class propiedad_service {
     }
 
     // DELETE PROPIEDAD BY ID
+    @Transactional
     public void delete(Long id) {
         // ERROR HANDLING FOR INVALID ID
         if (!propiedad_repository.existsById(id)) {

@@ -1,9 +1,9 @@
 package com.proyecto1.web.entities;
 
-import com.google.protobuf.Timestamp;
-
+import java.time.LocalDateTime; 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -23,21 +23,31 @@ public class solicitudes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_solicitud;
-    private String nombreSolicitante;
-    private Timestamp fechaSolicitud;
-    private Timestamp horaSolicitud;
-    private Timestamp fechaLlegada;
-    private Timestamp fechaSalida;
+
+    @Column(nullable = true)
+    private LocalDateTime fechaSolicitud;
+    @Column(nullable = true)
+    private LocalDateTime horaSolicitud; 
+    @Column(nullable = true)
+    private LocalDateTime fechaLlegada;
+    @Column(nullable = true)
+    private LocalDateTime fechaSalida;
+    
+    @Column(nullable = false)
     private double valor;
+    
     @Column(nullable = true)
     private double calificacion;
-    @ManyToOne
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_estadoSolicitud_FK")
     private EstadoSolicitud estadoSolicitud;
-    @ManyToOne
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_arrendatario_FK")
     private arrendatario arrendatario;
-    @ManyToOne
+    
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_propiedad_FK")
     private propiedad propiedad;
 }

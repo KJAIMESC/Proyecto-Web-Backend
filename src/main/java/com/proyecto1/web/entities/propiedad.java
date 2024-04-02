@@ -1,6 +1,8 @@
 package com.proyecto1.web.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,20 +23,32 @@ public class propiedad {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_propiedad;
     private byte[] imagen;
+    @Column(nullable = false)
     private String departamento;
+    @Column(nullable = false)
     private String municipio;
+    @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false)
     private String descripcion;
+    @Column(nullable = false)
     private int cantitadHabitaciones;
+    @Column(nullable = false)
     private int cantidadBanos;
+    @Column(nullable = false)
     private boolean permitidoMascotas;
+    @Column(nullable = false)
     private boolean piscina;
+    @Column(nullable = false)
     private double valorNoche;
-    private boolean activado;
-    @ManyToOne
+    @Column(nullable = false)
+    private boolean activado = false;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_tipoIngreso_FK")
     private tipoIngreso tipoIngreso;
-    @ManyToOne
-    @JoinColumn(name = "id_arrendatario_FK")
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_arrendador_FK")
     private arrendador arrendador;
 }
