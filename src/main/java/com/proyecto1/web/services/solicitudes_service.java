@@ -23,6 +23,10 @@ public class solicitudes_service {
     private solicitudes_repository solicitudes_repository;
     private ModelMapper modelMapper;
 
+    private final String message = "La solicitud con ID: ";
+    private final String noExiste = " no existe";
+    private final String noPuedeSEEEERRR = " no existe y por lo tanto no puede ser eliminada";
+
     @Autowired
     public solicitudes_service(solicitudes_repository solicitudes_repository, ModelMapper modelMapper) {
         this.solicitudes_repository = solicitudes_repository;
@@ -34,7 +38,7 @@ public class solicitudes_service {
     public solicitudes_dto get(Long id) {
         Optional<solicitudes> solicitudes_optional = solicitudes_repository.findById(id);
         if (!solicitudes_optional.isPresent()) {
-            throw new IllegalArgumentException("La solicitud con ID: " + id + " no existe");
+            throw new IllegalArgumentException(message + id + noExiste);
         }
         return modelMapper.map(solicitudes_optional.get(), solicitudes_dto.class);
     }
@@ -43,26 +47,14 @@ public class solicitudes_service {
     @Transactional
     public List<solicitudes_dto> getAll( ){
         List<solicitudes> solicitudesList = (List<solicitudes>) solicitudes_repository.findAll();
-        List<solicitudes_dto> solicitudes_dtoList = solicitudesList.stream().map(solicitudes -> modelMapper.map(solicitudes, solicitudes_dto.class)).collect(Collectors.toList());
-        return solicitudes_dtoList;
+        return solicitudesList.stream().map(solicitudes -> modelMapper.map(solicitudes, solicitudes_dto.class)).collect(Collectors.toList());
     }
 
     //SAVE SOLICITUDES
     @Transactional
     public solicitudes_dto save(solicitudes_dto solicitudes_dto){
-        // logger.info(solicitudes_dto.getArrendatario() + "");
-        // logger.info(solicitudes_dto.getArrendatario().getNombres() + "");
         solicitudes solicitudes = modelMapper.map(solicitudes_dto, solicitudes.class);
-        
-
-        // Log the class name before saving
-        logger.info("Class name before saving: " + solicitudes.getClass().getName());
-
         solicitudes = solicitudes_repository.save(solicitudes);
-
-        // Log the class name after saving
-        logger.info("Class name after saving: " + solicitudes.getClass().getName());
-
         return modelMapper.map(solicitudes, solicitudes_dto.class);
     }
     
@@ -70,7 +62,7 @@ public class solicitudes_service {
     @Transactional
     public solicitudes_dto update(solicitudes_dto solicitudes_dto){
         if(!solicitudes_repository.existsById(solicitudes_dto.getId_solicitud())){
-            throw new IllegalArgumentException("No se ha ingresado un ID valido");
+            throw new IllegalArgumentException(message + solicitudes_dto.getId_solicitud() + noExiste);
         }
         solicitudes solicitudes = modelMapper.map(solicitudes_dto, solicitudes.class);
         solicitudes = solicitudes_repository.save(solicitudes);
@@ -81,7 +73,7 @@ public class solicitudes_service {
     @Transactional
     public void delete(Long id){
         if (!solicitudes_repository.existsById(id)) {
-            throw new IllegalArgumentException("La solicitud con ID: " + id + " no existe");
+            throw new IllegalArgumentException(message + id + noPuedeSEEEERRR);
         }
         solicitudes_repository.deleteById(id);
     }
