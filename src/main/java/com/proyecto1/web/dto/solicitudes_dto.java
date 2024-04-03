@@ -22,6 +22,6 @@ public class solicitudes_dto {
     private double valor;
     private double calificacion;
     private EstadoSolicitud_dto estadoSolicitud;
-    // private arrendatario_dto arrendatario;
+    private arrendatario_dto arrendatario;
     private propiedad_dto propiedad;
  }

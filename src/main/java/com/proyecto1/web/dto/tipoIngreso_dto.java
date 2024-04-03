@@ -15,8 +15,6 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class tipoIngreso_dto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_tipoIngreso;
     private String tipo;
 }

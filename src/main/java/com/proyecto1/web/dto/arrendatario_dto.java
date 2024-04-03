@@ -16,15 +16,11 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class arrendatario_dto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_arrendatario;
     private String nombres;
     private String apellidos;
-    @Column(unique = true)
     private String correo;
     private String telefono;
     private String contrasena;
-    @Column(nullable = false)
     private boolean activado = false;
 }

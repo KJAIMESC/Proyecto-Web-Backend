@@ -17,6 +17,11 @@ public class arrendatario_service {
     arrendatario_repository arrendatario_repository;
     ModelMapper modelMapper;
 
+    private String message = "El arrendatario con ID: ";
+    private String noExiste = " no existe";
+    private String noPuedeSEEEERRR = " no existe y por lo tanto no puede ser eliminado";
+    private String errorContrasena = "La contraseña debe tener al menos 8 caracteres.";
+
     @Autowired
     public arrendatario_service(arrendatario_repository arrendatario_repository, ModelMapper modelMapper) {
         this.arrendatario_repository = arrendatario_repository;
@@ -28,7 +33,7 @@ public class arrendatario_service {
         Optional<arrendatario> arrendatario_optional = arrendatario_repository.findById(id);
         //ERROR HANDLING FOR INVALID ID
         if (!arrendatario_optional.isPresent()) {
-            throw new IllegalArgumentException("El arrendatario con ID: " + id + " no existe");
+            throw new IllegalArgumentException(message + id + noExiste);
         }
         return modelMapper.map(arrendatario_optional.get(), arrendatario_dto.class);
     }
@@ -44,7 +49,7 @@ public class arrendatario_service {
     public arrendatario_dto save(arrendatario_dto arrendatario_dto){
         //ERROR HANDLING IF PASSWORD IS TOO SHORT
         if (arrendatario_dto.getContrasena().length() < 8) {
-            throw new IllegalArgumentException("La contraseña debe tener al menos 8 caracteres.");
+            throw new IllegalArgumentException(errorContrasena);
         }
         arrendatario arrendatario = modelMapper.map(arrendatario_dto, arrendatario.class);
         arrendatario = arrendatario_repository.save(arrendatario);
@@ -55,11 +60,11 @@ public class arrendatario_service {
     public arrendatario_dto update(arrendatario_dto arrendatario_dto){
         //ERROR HANDLING FOR INVALID ID
         if(!arrendatario_repository.existsById(arrendatario_dto.getId_arrendatario())){
-            throw new IllegalArgumentException("El arrendatario con ID: " + arrendatario_dto.getId_arrendatario() + " no existe");
+            throw new IllegalArgumentException(message + arrendatario_dto.getId_arrendatario() + noExiste);
         }
         //ERROR HANDLING IF PASSWORD IS TOO SHORT
         if (arrendatario_dto.getContrasena().length() < 8) {
-            throw new IllegalArgumentException("La contraseña debe tener al menos 8 caracteres.");
+            throw new IllegalArgumentException(errorContrasena);
         }
         arrendatario arrendatario = modelMapper.map(arrendatario_dto, arrendatario.class);
         arrendatario = arrendatario_repository.save(arrendatario);
@@ -70,7 +75,7 @@ public class arrendatario_service {
     public void delete(Long id){
         //ERROR HANDLING FOR INVALID ID
         if (!arrendatario_repository.existsById(id)) {
-            throw new IllegalArgumentException("El arrendatario con ID: " + id + " no existe y por lo tanto no puede ser eliminado");
+            throw new IllegalArgumentException(message + id + noPuedeSEEEERRR);
         }
         arrendatario_repository.deleteById(id);
     }

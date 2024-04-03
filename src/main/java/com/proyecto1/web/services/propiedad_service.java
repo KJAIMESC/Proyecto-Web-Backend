@@ -19,6 +19,10 @@ public class propiedad_service {
     private propiedad_repository propiedad_repository;
     private ModelMapper modelMapper;
 
+    private String message = "La propiedad con ID: ";
+    private String noExiste = " no existe";
+    private String noPuedeSEEEERRR = " no existe y por lo tanto no puede ser eliminado";
+
     @Autowired
     public propiedad_service(propiedad_repository propiedad_repository, ModelMapper modelMapper) {
         this.propiedad_repository = propiedad_repository;
@@ -31,7 +35,7 @@ public class propiedad_service {
         Optional<propiedad> propiedad_optional = propiedad_repository.findById(id);
         // ERROR HANDLING FOR INVALID ID
         if (!propiedad_optional.isPresent()) {
-            throw new IllegalArgumentException("La propiedad con ID: " + id + " no existe");
+            throw new IllegalArgumentException(message + id + noExiste);
         }
 
         propiedad propiedadEntity = propiedad_optional.get();
@@ -59,7 +63,7 @@ public class propiedad_service {
     public propiedad_dto update(propiedad_dto propiedad_dto) {
         // ERROR HANDLING FOR INVALID ID
         if (!propiedad_repository.existsById(propiedad_dto.getId_propiedad())) {
-            throw new IllegalArgumentException("La propiedad con ID: " + propiedad_dto.getId_propiedad() + " no existe");
+            throw new IllegalArgumentException(message + propiedad_dto.getId_propiedad() + noExiste);
         }
         propiedad propiedad = modelMapper.map(propiedad_dto, propiedad.class);
         propiedad = propiedad_repository.save(propiedad);
@@ -71,7 +75,7 @@ public class propiedad_service {
     public void delete(Long id) {
         // ERROR HANDLING FOR INVALID ID
         if (!propiedad_repository.existsById(id)) {
-            throw new IllegalArgumentException("La propiedad con ID: " + id + " no existe y por lo tanto no puede ser eliminada");
+            throw new IllegalArgumentException(message + id + noPuedeSEEEERRR);
         }
         propiedad_repository.deleteById(id);
     }

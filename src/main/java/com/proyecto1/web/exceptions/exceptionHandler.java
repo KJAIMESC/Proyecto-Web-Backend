@@ -17,12 +17,12 @@ import lombok.NoArgsConstructor;
 @ControllerAdvice
 public class exceptionHandler extends ResponseEntityExceptionHandler{
 
-    //GENERAL INVALID REQUEST EXCEPTION
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex){
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), "Error en el Request");
-        return new ResponseEntity<>(apiError, apiError.getStatus());
-    }
+    // GENERAL INVALID REQUEST EXCEPTION
+    // @ExceptionHandler(IllegalArgumentException.class)
+    // public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex){
+    //     ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), "Error en el Request");
+    //     return new ResponseEntity<>(apiError, apiError.getStatus());
+    // }
 
     //DATA INTEGRITY VIOLATIONS
     @ExceptionHandler(DataIntegrityViolationException.class)

@@ -15,8 +15,6 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class EstadoSolicitud_dto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id_EstadoSolicitud;
     private String Estado;
 }

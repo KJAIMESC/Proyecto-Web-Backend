@@ -16,6 +16,9 @@ import com.proyecto1.web.repositories.EstadoSolicitud_repository;
 public class EstadoSolicitud_service {
     EstadoSolicitud_repository estadoSolicitud_repository;
     ModelMapper modelMapper;
+    private String message = "El Estado de Solicitud con ID: ";
+    private String noExiste = " no existe";
+    private String noPuedeSEEEERRR = " no existe y por lo tanto no puede ser eliminado";
 
     @Autowired
     public EstadoSolicitud_service(EstadoSolicitud_repository estadoSolicitud_repository, ModelMapper modelMapper) {
@@ -27,7 +30,7 @@ public class EstadoSolicitud_service {
     public EstadoSolicitud_dto get(Long id) {
         Optional<EstadoSolicitud> estadoSolicitud_optional = estadoSolicitud_repository.findById(id);
         if (!estadoSolicitud_optional.isPresent()) {
-            throw new IllegalArgumentException("El Estado de Solicitud con ID: " + id + " no existe");
+            throw new IllegalArgumentException(message + id + noExiste);
         }
         return modelMapper.map(estadoSolicitud_optional.get(), EstadoSolicitud_dto.class);
     }
@@ -49,7 +52,8 @@ public class EstadoSolicitud_service {
     //UPDATE ESTADO SOLICITUD
     public EstadoSolicitud_dto update(EstadoSolicitud_dto estadoSolicitud_dto) {
         if (!estadoSolicitud_repository.existsById(estadoSolicitud_dto.getId_EstadoSolicitud())) {
-            throw new IllegalArgumentException("El Estado de Solicitud con ID: " + estadoSolicitud_dto.getId_EstadoSolicitud() + " no existe");
+            Long id = estadoSolicitud_dto.getId_EstadoSolicitud();
+            throw new IllegalArgumentException(message + id + noExiste);
         }
         EstadoSolicitud estadoSolicitud = modelMapper.map(estadoSolicitud_dto, EstadoSolicitud.class);
         estadoSolicitud = estadoSolicitud_repository.save(estadoSolicitud);
@@ -59,7 +63,7 @@ public class EstadoSolicitud_service {
     //DELETE ESTADO SOLICITUD BY ID
     public void delete(Long id){
         if (!estadoSolicitud_repository.existsById(id)) {
-            throw new IllegalArgumentException("El Estado de Solicitud con ID: " + id + " no existe y por lo tanto no puede ser eliminado");
+            throw new IllegalArgumentException(message + id + noPuedeSEEEERRR);
         }
         estadoSolicitud_repository.deleteById(id);
     }
