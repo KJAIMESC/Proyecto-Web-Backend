@@ -5,8 +5,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +16,6 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class solicitudes_service {
-    private static final Logger logger = LoggerFactory.getLogger(solicitudes_service.class);
 
     private solicitudes_repository solicitudes_repository;
     private ModelMapper modelMapper;
@@ -53,17 +50,6 @@ public class solicitudes_service {
     //SAVE SOLICITUDES
     @Transactional
     public solicitudes_dto save(solicitudes_dto solicitudes_dto){
-        solicitudes solicitudes = modelMapper.map(solicitudes_dto, solicitudes.class);
-        solicitudes = solicitudes_repository.save(solicitudes);
-        return modelMapper.map(solicitudes, solicitudes_dto.class);
-    }
-    
-    //UPDATE SOLICITUDES
-    @Transactional
-    public solicitudes_dto update(solicitudes_dto solicitudes_dto){
-        if(!solicitudes_repository.existsById(solicitudes_dto.getId_solicitud())){
-            throw new IllegalArgumentException(message + solicitudes_dto.getId_solicitud() + noExiste);
-        }
         solicitudes solicitudes = modelMapper.map(solicitudes_dto, solicitudes.class);
         solicitudes = solicitudes_repository.save(solicitudes);
         return modelMapper.map(solicitudes, solicitudes_dto.class);
