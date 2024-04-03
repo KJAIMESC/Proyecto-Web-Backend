@@ -50,7 +50,10 @@ public class solicitudes_service {
     //SAVE SOLICITUDES
     @Transactional
     public solicitudes_dto save(solicitudes_dto solicitudes_dto){
+        // logger.info(solicitudes_dto.getArrendatario() + "");
+        // logger.info(solicitudes_dto.getArrendatario().getNombres() + "");
         solicitudes solicitudes = modelMapper.map(solicitudes_dto, solicitudes.class);
+        
 
         // Log the class name before saving
         logger.info("Class name before saving: " + solicitudes.getClass().getName());

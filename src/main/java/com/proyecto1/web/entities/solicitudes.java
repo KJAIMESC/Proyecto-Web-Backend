@@ -1,6 +1,8 @@
 package com.proyecto1.web.entities;
 
-import java.time.LocalDateTime; 
+import java.time.LocalDateTime;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -39,15 +41,15 @@ public class solicitudes {
     @Column(nullable = true)
     private double calificacion;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "id_estadoSolicitud_FK")
     private EstadoSolicitud estadoSolicitud;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "id_arrendatario_FK")
     private arrendatario arrendatario;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "id_propiedad_FK")
     private propiedad propiedad;
 }
