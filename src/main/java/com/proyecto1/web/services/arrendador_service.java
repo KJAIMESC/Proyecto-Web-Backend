@@ -40,12 +40,15 @@ public class arrendador_service {
         return modelMapper.map(arrendador, arrendador_dto.class);
     }
 
-    //RETURN ARRENDADOR LIST
-    public List<arrendador_dto> getAll( ){
+    // RETURN ARRENDADOR LIST
+    public List<arrendador_dto> getAll() {
         List<arrendador> arrendadorList = (List<arrendador>) arrendador_repository.findAll();
-        List<arrendador_dto> arrendador_dtoList = arrendadorList.stream().map(arrendador -> modelMapper.map(arrendador, arrendador_dto.class)).collect(Collectors.toList());
+        List<arrendador_dto> arrendador_dtoList = arrendadorList.stream()
+                .map(arrendador -> modelMapper.map(arrendador, arrendador_dto.class))
+                .toList();
         return arrendador_dtoList;
     }
+
 
     //SAVE ARRENDADOR
     public arrendador_dto save(arrendador_dto arrendador_dto){
