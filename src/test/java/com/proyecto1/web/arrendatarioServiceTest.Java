@@ -1,46 +1,86 @@
 package com.proyecto1.web;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
-import com.proyecto1.web.controllers.ArrendatarioController;
-import com.proyecto1.web.dto.arrendatario_dto;
-import com.proyecto1.web.services.arrendatario_service;
+import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.MockitoAnnotations;
+import org.modelmapper.ModelMapper;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import com.proyecto1.web.dto.arrendatario_dto;
+import com.proyecto1.web.entities.arrendatario;
+import com.proyecto1.web.repositories.arrendatario_repository;
+import com.proyecto1.web.services.arrendatario_service;
+
+@SpringBootTest
 public class arrendatarioServiceTest {
 
     @Mock
-    private arrendatario_service arrendatarioService;
+    private arrendatario_repository arrendatarioRepository;
+
+    @Mock
+    private ModelMapper modelMapper;
 
     @InjectMocks
-    private Arrendatario_controller arrendatarioController;
+    private arrendatario_service arrendatarioService;
 
-    private MockMvc mockMvc;
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
-    public void getArrendatarioByIdTest() throws Exception {
-        arrendatario_dto arrendatario = new arrendatario_dto(1, "Lu Actualizado", "Vargas Gomez", "lu2@javeriana.edu.com", "111111", "qwerty299", false);
-        when(arrendatarioService.getById(1L)).thenReturn(arrendatario);
+    public void testGetExistingArrendatario() {
+        // Arrange
+        Long id = 1L;
+        arrendatario arrendatarioEntity = new arrendatario();
+        arrendatarioEntity.setId_arrendatario(id);
+        arrendatarioEntity.setNombres("Lu Actualizado");
+        arrendatarioEntity.setApellidos("Vargas Gomez");
+        arrendatarioEntity.setCorreo("lu2@javeriana.edu.com");
+        arrendatarioEntity.setTelefono("111111");
+        arrendatarioEntity.setContrasena("qwerty299");
+        arrendatarioEntity.setActivado(false);
 
-        mockMvc = standaloneSetup(arrendatarioController).build();
+        arrendatario_dto arrendatarioDto = new arrendatario_dto(id, "Lu Actualizado", "Vargas Gomez", "lu2@javeriana.edu.com", "111111", "qwerty299", false);
 
-        mockMvc.perform(get("/arrendatario/{id}", 1))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.id_arrendatario").value(1))
-               .andExpect(jsonPath("$.nombres").value("Lu Actualizado"))
-               .andExpect(jsonPath("$.apellidos").value("Vargas Gomez"))
-               .andExpect(jsonPath("$.correo").value("lu2@javeriana.edu.com"))
-               .andExpect(jsonPath("$.telefono").value("111111"))
-               .andExpect(jsonPath("$.contrasena").value("qwerty299"))
-               .andExpect(jsonPath("$.activado").value(false));
+        when(arrendatarioRepository.findById(id)).thenReturn(Optional.of(arrendatarioEntity));
+        when(modelMapper.map(arrendatarioEntity, arrendatario_dto.class)).thenReturn(arrendatarioDto);
 
-        verify(arrendatarioService).getById(1L);
+        // Act
+        arrendatario_dto result = arrendatarioService.get(id);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(id, result.getId_arrendatario());
+        assertEquals("Lu Actualizado", result.getNombres());
+        assertEquals("Vargas Gomez", result.getApellidos());
+        assertEquals("lu2@javeriana.edu.com", result.getCorreo());
+        assertEquals("111111", result.getTelefono());
+        assertEquals("qwerty299", result.getContrasena());
+        assertFalse(result.isActivado());
     }
+
+    @Test
+    public void testGetNonExistingArrendatario() {
+        // Arrange
+        Long idInexistente = 2L;
+        when(arrendatarioRepository.findById(idInexistente)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            arrendatarioService.get(idInexistente);
+        });
+
+        assertEquals("El arrendatario con ID: 2 no existe", exception.getMessage());
+    }
+
+    
 }
+

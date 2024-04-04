@@ -125,4 +125,33 @@ public class arrendadorServiceTest {
         }
     }
 
+    @Test
+    void testCreateArrendador() {
+        // Arrange
+        Long id = 1L;
+        arrendador_dto arrendadorDto = new arrendador_dto();
+        arrendadorDto.setId_arrendador(id);
+        arrendadorDto.setNombres("Juan");
+        arrendadorDto.setApellidos("Perez");
+        arrendadorDto.setCorreo("juan@example.com");
+        arrendadorDto.setTelefono("123456789");
+        arrendadorDto.setContrasena("password");
+
+        arrendador arrendadorEntity = new arrendador();
+        arrendadorEntity.setId_arrendador(id);
+        arrendadorEntity.setNombres("Juan");
+        arrendadorEntity.setApellidos("Perez");
+        arrendadorEntity.setCorreo("juan@example.com");
+        arrendadorEntity.setTelefono("123456789");
+        arrendadorEntity.setContrasena("password");
+
+        when(modelMapper.map(arrendadorDto, arrendador.class)).thenReturn(arrendadorEntity);
+
+        // Act
+        arrendadorService.save(arrendadorDto);
+
+        // Assert
+        verify(arrendadorRepository).save(arrendadorEntity);
+    }
+
 }
