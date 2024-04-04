@@ -36,10 +36,12 @@ public class EstadoSolicitud_service {
         return modelMapper.map(estadoSolicitud_optional.get(), EstadoSolicitud_dto.class);
     }
 
-    //RETURN ESTADO SOLICITUD LIST
-    public List<EstadoSolicitud_dto> getAll( ){
+    // RETURN ESTADO SOLICITUD LIST
+    public List<EstadoSolicitud_dto> getAll() {
         List<EstadoSolicitud> estadoSolicitudList = (List<EstadoSolicitud>) estadoSolicitud_repository.findAll();
-        List<EstadoSolicitud_dto> estadoSolicitud_dtoList = estadoSolicitudList.stream().map(estadoSolicitud -> modelMapper.map(estadoSolicitud, EstadoSolicitud_dto.class)).collect(Collectors.toList());
+        List<EstadoSolicitud_dto> estadoSolicitud_dtoList = estadoSolicitudList.stream()
+                .map(estadoSolicitud -> modelMapper.map(estadoSolicitud, EstadoSolicitud_dto.class))
+                .toList();
         return estadoSolicitud_dtoList;
     }
 

@@ -41,7 +41,7 @@ public class arrendatario_service {
     //RETURN ARRENDATARIO LIST
     public List<arrendatario_dto> getAll( ){
         List<arrendatario> arrendatarioList = (List<arrendatario>) arrendatario_repository.findAll();
-        List<arrendatario_dto> arrendatario_dtoList = arrendatarioList.stream().map(arrendatario -> modelMapper.map(arrendatario, arrendatario_dto.class)).collect(Collectors.toList());
+        List<arrendatario_dto> arrendatario_dtoList = arrendatarioList.stream().map(arrendatario -> modelMapper.map(arrendatario, arrendatario_dto.class)).toList();
         return arrendatario_dtoList;
     }
 

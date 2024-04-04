@@ -44,7 +44,7 @@ public class solicitudes_service {
     @Transactional
     public List<solicitudes_dto> getAll( ){
         List<solicitudes> solicitudesList = (List<solicitudes>) solicitudes_repository.findAll();
-        return solicitudesList.stream().map(solicitudes -> modelMapper.map(solicitudes, solicitudes_dto.class)).collect(Collectors.toList());
+        return solicitudesList.stream().map(solicitudes -> modelMapper.map(solicitudes, solicitudes_dto.class)).toList();
     }
 
     //SAVE SOLICITUDES

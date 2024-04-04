@@ -46,7 +46,7 @@ public class propiedad_service {
     @Transactional
     public List<propiedad_dto> getAll() {
         List<propiedad> propiedadList = (List<propiedad>) propiedad_repository.findAll();
-        List<propiedad_dto> propiedad_dtoList = propiedadList.stream().map(propiedad -> modelMapper.map(propiedad, propiedad_dto.class)).collect(Collectors.toList());
+        List<propiedad_dto> propiedad_dtoList = propiedadList.stream().map(propiedad -> modelMapper.map(propiedad, propiedad_dto.class)).toList();
         return propiedad_dtoList;
     }
 
