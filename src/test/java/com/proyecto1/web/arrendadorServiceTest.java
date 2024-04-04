@@ -14,6 +14,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.ErrorResponseException;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.proyecto1.web.dto.arrendador_dto;
 import com.proyecto1.web.entities.arrendador;
@@ -76,5 +80,49 @@ public class arrendadorServiceTest {
         assertTrue(result.isActivado());
     }
 
-    // Additional tests (testGetNonExistingArrendador, testGetAllArrendador, etc.)
+    @Test
+    public void testGetNonExistingArrendador() {
+        // Arrange
+        Long id = 2L;
+        when(arrendadorRepository.findById(id)).thenReturn(Optional.empty());
+
+        // Act and Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            arrendadorService.get(id);
+        });
+
+        assertEquals("El Arrendador con ID: 2 no existe", exception.getMessage());
+    }
+
+    @Test
+    public void testGetAllArrendador() {
+        // Arrange
+        List<arrendador> arrendadorList = Arrays.asList(
+            new arrendador(1L, "Kevin", "Jaimes Carrillo", "k-jaimes@javeriana.edu.co", "00000", "qwerty", false),
+            new arrendador(4L, "Lu Actualizado", "Vargas Gomez", "lu@javeriana.edu.com", "111111", "qwerty29", false)
+            // ... más instancias de arrendador ...
+        );
+
+        List<arrendador_dto> expectedDtoList = Arrays.asList(
+            new arrendador_dto(1L, "Kevin", "Jaimes Carrillo", "k-jaimes@javeriana.edu.co", "00000", "qwerty", false),
+            new arrendador_dto(4L, "Lu Actualizado", "Vargas Gomez", "lu@javeriana.edu.com", "111111", "qwerty29", false)
+            // ... más instancias de arrendador_dto ...
+        );
+
+        when(arrendadorRepository.findAll()).thenReturn(arrendadorList);
+        for (int i = 0; i < arrendadorList.size(); i++) {
+            when(modelMapper.map(arrendadorList.get(i), arrendador_dto.class)).thenReturn(expectedDtoList.get(i));
+        }
+
+        // Act
+        List<arrendador_dto> result = arrendadorService.getAll();
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(expectedDtoList.size(), result.size());
+        for (int i = 0; i < expectedDtoList.size(); i++) {
+            assertEquals(expectedDtoList.get(i), result.get(i));
+        }
+    }
+
 }
