@@ -110,5 +110,63 @@ public class EstadoSolicitudServiceTest {
         assertTrue(result.containsAll(expected));
     }
 
-    // Similarly, write tests for save, update, and delete methods
+    @Test
+public void testSaveEstadoSolicitud() {
+    // Arrange
+    EstadoSolicitud_dto nuevoEstadoSolicitudDto = new EstadoSolicitud_dto();
+    EstadoSolicitud nuevoEstadoSolicitud = new EstadoSolicitud();
+    EstadoSolicitud guardadoEstadoSolicitud = new EstadoSolicitud(17L, "test");
+
+    when(modelMapper.map(nuevoEstadoSolicitudDto, EstadoSolicitud.class)).thenReturn(nuevoEstadoSolicitud);
+    when(estadoSolicitudRepository.save(nuevoEstadoSolicitud)).thenReturn(guardadoEstadoSolicitud);
+    when(modelMapper.map(guardadoEstadoSolicitud, EstadoSolicitud_dto.class)).thenReturn(new EstadoSolicitud_dto(guardadoEstadoSolicitud.getId_EstadoSolicitud(), guardadoEstadoSolicitud.getEstado()));
+
+    // Act
+    EstadoSolicitud_dto result = estadoSolicitudService.save(nuevoEstadoSolicitudDto);
+
+    // Assert
+    assertNotNull(result);
+    assertEquals(17L, result.getId_EstadoSolicitud());
+    assertEquals("test", result.getEstado());
+    }
+
+@Test
+public void testUpdateEstadoSolicitud() {
+    // Arrange
+    Long id = 16L;
+    EstadoSolicitud_dto estadoSolicitudDto = new EstadoSolicitud_dto(id, "test");
+    EstadoSolicitud estadoSolicitudExistente = new EstadoSolicitud(id, "EstadoSolicitud_test");
+    EstadoSolicitud estadoSolicitudActualizado = new EstadoSolicitud(id, "test");
+
+    when(estadoSolicitudRepository.existsById(id)).thenReturn(true);
+    when(modelMapper.map(estadoSolicitudDto, EstadoSolicitud.class)).thenReturn(estadoSolicitudActualizado);
+    when(estadoSolicitudRepository.save(estadoSolicitudActualizado)).thenReturn(estadoSolicitudActualizado);
+    when(modelMapper.map(estadoSolicitudActualizado, EstadoSolicitud_dto.class)).thenReturn(estadoSolicitudDto);
+
+    // Act
+    EstadoSolicitud_dto result = estadoSolicitudService.update(estadoSolicitudDto);
+
+    // Assert
+    assertNotNull(result);
+    assertEquals(id, result.getId_EstadoSolicitud());
+    assertEquals("test", result.getEstado());
+    }
+
+    @Test
+public void testDeleteEstadoSolicitud() {
+    // Arrange
+    Long id = 17L;
+    when(estadoSolicitudRepository.existsById(id)).thenReturn(true);
+
+    // Act
+    estadoSolicitudService.delete(id);
+
+    // Assert
+    verify(estadoSolicitudRepository, times(1)).deleteById(id);
+}
+
+
+
+
+    
 }

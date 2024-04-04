@@ -103,4 +103,6 @@ public class propiedadServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
+    
+
 }
