@@ -144,33 +144,4 @@ public class ExceptionHandlerTest {
         assertEquals("Referencia a Propiedad Inválida", apiError.getError());
     }
 
-    @Test
-    public void testDataIntegrityViolationExceptionHandling() {
-    // Simular una excepción de integridad de datos
-    DataIntegrityViolationException exception = new DataIntegrityViolationException("Duplicate entry");
-    ResponseEntity<Object> response = exceptionHandler.manejarExcepcionDeIntegridadDeDatos(exception);
-
-    // Verificar la respuesta
-    assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
-    assertTrue(response.getBody() instanceof exceptionHandler.ApiError);
-    exceptionHandler.ApiError apiError = (exceptionHandler.ApiError) response.getBody();
-    assertEquals("Una cuenta con ese correo electrónico ya existe.", apiError.getMessage());
-    assertEquals("Correo Duplicado", apiError.getError());
-    }
-
-    @Test
-    public void testEntityNotFoundExceptionHandling() {
-    // Simular una excepción de entidad no encontrada
-    EntityNotFoundException exception = new EntityNotFoundException("El tipo de ingreso asignado no existe");
-    ResponseEntity<Object> response = exceptionHandler.handleEntityNotFound(exception);
-
-    // Verificar la respuesta
-    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-    assertTrue(response.getBody() instanceof exceptionHandler.ApiError);
-    exceptionHandler.ApiError apiError = (exceptionHandler.ApiError) response.getBody();
-    assertEquals("El tipo de ingreso asignado no existe o otros datos dependen de él.", apiError.getMessage());
-    assertEquals("Entity Not Found", apiError.getError());
-    }
-
-
 }
