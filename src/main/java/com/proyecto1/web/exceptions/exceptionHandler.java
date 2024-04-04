@@ -17,12 +17,12 @@ import lombok.NoArgsConstructor;
 @ControllerAdvice
 public class exceptionHandler extends ResponseEntityExceptionHandler{
 
-    // GENERAL INVALID REQUEST EXCEPTION
-    // @ExceptionHandler(IllegalArgumentException.class)
-    // public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex){
-    //     ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), "Error en el Request");
-    //     return new ResponseEntity<>(apiError, apiError.getStatus());
-    // }
+    //GENERAL INVALID REQUEST EXCEPTION
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Object> handleIllegalArgumentException(IllegalArgumentException ex){
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), "Error en el Request");
+        return new ResponseEntity<>(apiError, apiError.getStatus());
+    }
 
     //DATA INTEGRITY VIOLATIONS
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -46,6 +46,20 @@ public class exceptionHandler extends ResponseEntityExceptionHandler{
             //ERROR HANDLING FOR FOREIGN KEY (PROPIEDAD TO ARRENDADOR)
             else if (sqlEx.getMessage().contains("`grupo_1_6`.`propiedad`") && sqlEx.getMessage().contains("`id_arrendador_fk`")) {
                 mensajeDetallado = "El arrendador asignado no existe.";
+            }
+            //ERROR HANDLING FOR FOREIGN KEY (SOLICITUDES TO ESTADOSOLICITUD)
+            else if (sqlEx.getMessage().contains("`grupo_1_6`.`solicitudes`") && sqlEx.getMessage().contains("FKq9lsjulsg3utpah314mvnyfpq")) {
+                mensajeDetallado = "La referencia a Estado Solicitudes en Solicitudes es inválida o no existe.";
+            }
+            //ERROR HANDLING FOR FOREIGN KEY (SOLICITUDES TO ARRENDATARIO)
+            else if (sqlEx.getMessage().contains("`grupo_1_6`.`solicitudes`") && sqlEx.getMessage().contains("FKqca8j1oo9d1qisjrgr8m434rj")) {
+                mensajeDetallado = "La referencia a Arrendatario en Solicitudes es inválida o no existe.";
+                errorType = "Referencia a Arrendatario Inválida";
+            }
+            //ERROR HANDLING FOR FOREIGN KEY (SOLICITUDES TO PROPIEDAD)
+            else if (sqlEx.getMessage().contains("`grupo_1_6`.`solicitudes`") && sqlEx.getMessage().contains("FK2x8epyvcyta1ots3xbdbwk6q0")) {
+                mensajeDetallado = "La referencia a Propiedad en Solicitudes es inválida o no existe.";
+                errorType = "Referencia a Propiedad Inválida";
             }
 
             apiError = new ApiError(HttpStatus.CONFLICT, mensajeDetallado, errorType);

@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,12 +41,6 @@ public class solicitudes_controller {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public solicitudes_dto save(@RequestBody solicitudes_dto solicitudes_dto){
         return solicitudes_service.save(solicitudes_dto);
-    }
-
-    //UPDATE SOLICITUDES
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public solicitudes_dto update(@RequestBody solicitudes_dto solicitudes_dto){
-        return solicitudes_service.update(solicitudes_dto);
     }
 
     //DELETE SOLICITUDES BY ID
