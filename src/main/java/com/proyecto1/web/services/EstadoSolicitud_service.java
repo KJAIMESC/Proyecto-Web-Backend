@@ -16,9 +16,10 @@ import com.proyecto1.web.repositories.EstadoSolicitud_repository;
 public class EstadoSolicitud_service {
     EstadoSolicitud_repository estadoSolicitud_repository;
     ModelMapper modelMapper;
-    private String message = "El Estado de Solicitud con ID: ";
-    private String noExiste = " no existe";
-    private String noPuedeSEEEERRR = " no existe y por lo tanto no puede ser eliminado";
+
+    private final String message = "El Estado de Solicitud con ID: ";
+    private final String noExiste = " no existe";
+    private final String noPuedeSEEEERRR = " no existe y por lo tanto no puede ser eliminado";
 
     @Autowired
     public EstadoSolicitud_service(EstadoSolicitud_repository estadoSolicitud_repository, ModelMapper modelMapper) {
