@@ -13,6 +13,7 @@ import jakarta.persistence.EntityNotFoundException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ExceptionHandlerTest {
 
@@ -41,7 +42,22 @@ public class ExceptionHandlerTest {
         assertEquals("Correo Duplicado", apiError.getError());
     }
 
-    // Additional test methods for other specific cases of DataIntegrityViolationException...
+     @Test
+    public void testDataAnnotationAndNoArgsConstructor() {
+        exceptionHandler.ApiError apiError = new exceptionHandler.ApiError();
+        
+        // Test that the object was created
+        assertNotNull(apiError);
+        
+        // Test that getters and setters work as expected
+        apiError.setStatus(HttpStatus.OK);
+        apiError.setMessage("Test Message");
+        apiError.setError("Test Error");
+        
+        assertEquals(HttpStatus.OK, apiError.getStatus());
+        assertEquals("Test Message", apiError.getMessage());
+        assertEquals("Test Error", apiError.getError());
+    }
 
     @Test
     public void testHandleEntityNotFoundExceptionWithTipoIngreso() {
