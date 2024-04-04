@@ -1,4 +1,4 @@
-package com.proyecto1.web.controllers;
+package com.proyecto1.web;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
