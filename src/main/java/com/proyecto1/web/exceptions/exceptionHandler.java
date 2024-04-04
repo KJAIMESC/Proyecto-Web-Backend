@@ -74,7 +74,7 @@ public class exceptionHandler extends ResponseEntityExceptionHandler{
 
     //ENTITY NOT FOUND EXCEPTION
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
+    public static ResponseEntity<Object> handleEntityNotFound(EntityNotFoundException ex) {
         String detailedMessage = ex.getMessage();
         
         if (detailedMessage.contains("tipoIngreso")) {

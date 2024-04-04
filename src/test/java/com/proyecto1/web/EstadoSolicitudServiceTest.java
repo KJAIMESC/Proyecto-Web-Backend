@@ -163,9 +163,24 @@ public void testDeleteEstadoSolicitud() {
 
     // Assert
     verify(estadoSolicitudRepository, times(1)).deleteById(id);
-}
+    }
 
+    @Test
+    public void testDeleteNonExistingEstadoSolicitud() {
+        // Arrange
+        Long idInexistente = 100L; // Un ID que se supone que no existe
+        when(estadoSolicitudRepository.existsById(idInexistente)).thenReturn(false);
 
+        // Act & Assert
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            estadoSolicitudService.delete(idInexistente);
+        });
+
+        String expectedMessage = "El Estado de Solicitud con ID: " + idInexistente + " no existe y por lo tanto no puede ser eliminado";
+        String actualMessage = exception.getMessage();
+
+        assertEquals(expectedMessage, actualMessage);
+    }
 
 
     

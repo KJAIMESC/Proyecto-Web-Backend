@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.util.Optional;
+import java.util.List;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -103,6 +105,37 @@ public class propiedadServiceTest {
         assertTrue(actualMessage.contains(expectedMessage));
     }
 
-    
+    @Test
+public void testDeleteExistingPropiedad() {
+    // Arrange
+    Long idExistente = 34L;
+    when(propiedadRepository.existsById(idExistente)).thenReturn(true);
+
+    // Act
+    propiedadService.delete(idExistente);
+
+    // Assert
+    verify(propiedadRepository, times(1)).deleteById(idExistente);
+    }
+
+@Test
+public void testGetAllPropiedad() {
+    // Arrange
+    propiedad propiedad1 = new propiedad(1L, null, "Bogota", "Bogota", "Casita", "miCasita", 10, 2, true, true, 100000.0, false, null, null);
+
+    List<propiedad> propiedadList = Arrays.asList(propiedad1);
+
+    when(propiedadRepository.findAll()).thenReturn(propiedadList);
+    // Configurar comportamiento del modelMapper para mapear cada propiedad a propiedad_dto
+
+    // Act
+    List<propiedad_dto> result = propiedadService.getAll();
+
+    // Assert
+    assertNotNull(result);
+    assertEquals(1, result.size());
+    // Verificaciones adicionales para cada propiedad_dto en la lista resultante
+    }   
+
 
 }
