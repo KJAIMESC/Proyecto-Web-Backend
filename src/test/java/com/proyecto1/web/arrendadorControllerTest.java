@@ -1,4 +1,5 @@
 package com.proyecto1.web;
+
 import com.proyecto1.web.controllers.arrendador_controller;
 import com.proyecto1.web.dto.arrendador_dto;
 import com.proyecto1.web.services.arrendador_service;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;

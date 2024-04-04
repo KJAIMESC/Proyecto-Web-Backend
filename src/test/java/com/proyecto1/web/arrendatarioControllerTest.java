@@ -44,4 +44,57 @@ public class arrendatarioControllerTest {
         assertEquals(2, resultList.size());
         assertEquals(mockedList, resultList);
     }
+
+    @Test
+    void testGetArrendatarioById() {
+        // Arrange
+        long id = 1L;
+        arrendatario_dto expectedDto = new arrendatario_dto();
+        when(serviceMock.get(id)).thenReturn(expectedDto);
+
+        // Act
+        arrendatario_dto result = controller.get(id);
+
+        // Assert
+        assertNotNull(result);
+    }
+
+    @Test
+    void testSaveArrendatario() {
+        // Arrange
+        arrendatario_dto arrendatarioDtoToSave = new arrendatario_dto();
+        when(serviceMock.save(arrendatarioDtoToSave)).thenReturn(arrendatarioDtoToSave);
+
+        // Act
+        arrendatario_dto result = controller.save(arrendatarioDtoToSave);
+
+        // Assert
+        assertNotNull(result);
+    }
+
+    @Test
+    void testUpdateArrendatario() {
+        // Arrange
+        arrendatario_dto arrendatarioDtoToUpdate = new arrendatario_dto();
+        when(serviceMock.update(arrendatarioDtoToUpdate)).thenReturn(arrendatarioDtoToUpdate);
+
+        // Act
+        arrendatario_dto result = controller.update(arrendatarioDtoToUpdate);
+
+        // Assert
+        assertNotNull(result);
+    }
+
+    @Test
+    void testDeleteArrendatario() {
+        // Arrange
+        long idToDelete = 1L;
+
+        // Act
+        controller.delete(idToDelete);
+
+        // Assert
+        verify(serviceMock, times(1)).delete(idToDelete);
+    }
+
 }
