@@ -53,6 +53,7 @@ public class EstadoSolicitud_controller {
     }
 
     //DELETE ESTADOSOLICITUD BY ID
+    //test commit ;0
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void delete(@PathVariable Long id){
         estadoSolicitud_service.delete(id);
