@@ -32,7 +32,7 @@ public class propiedad {
     @Column(nullable = false)
     private String descripcion;
     @Column(nullable = false)
-    private int cantitadHabitaciones;
+    private int cantidadHabitaciones;
     @Column(nullable = false)
     private int cantidadBanos;
     @Column(nullable = false)

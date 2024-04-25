@@ -45,7 +45,7 @@ public class propiedadServiceTest {
         propiedadEntity.setMunicipio("Bogota");
         propiedadEntity.setNombre("Casita");
         propiedadEntity.setDescripcion("miCasita");
-        propiedadEntity.setCantitadHabitaciones(10);
+        propiedadEntity.setCantidadHabitaciones(10);
         propiedadEntity.setCantidadBanos(2);
         propiedadEntity.setPermitidoMascotas(true);
         propiedadEntity.setPiscina(true);

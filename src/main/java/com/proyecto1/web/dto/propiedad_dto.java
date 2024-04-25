@@ -18,7 +18,7 @@ public class propiedad_dto {
     private String municipio;
     private String nombre;
     private String descripcion;
-    private int cantitadHabitaciones;
+    private int cantidadHabitaciones;
     private int cantidadBanos;
     private boolean permitidoMascotas;
     private boolean piscina;

@@ -37,7 +37,7 @@ class PropiedadTest {
         assertEquals(municipio, propiedad.getMunicipio());
         assertEquals(nombre, propiedad.getNombre());
         assertEquals(descripcion, propiedad.getDescripcion());
-        assertEquals(cantidadHabitaciones, propiedad.getCantitadHabitaciones());
+        assertEquals(cantidadHabitaciones, propiedad.getCantidadHabitaciones());
         assertEquals(cantidadBanos, propiedad.getCantidadBanos());
         assertEquals(permitidoMascotas, propiedad.isPermitidoMascotas());
         assertEquals(piscina, propiedad.isPiscina());
@@ -70,7 +70,7 @@ class PropiedadTest {
         propiedad.setMunicipio(municipio);
         propiedad.setNombre(nombre);
         propiedad.setDescripcion(descripcion);
-        propiedad.setCantitadHabitaciones(cantidadHabitaciones);
+        propiedad.setCantidadHabitaciones(cantidadHabitaciones);
         propiedad.setCantidadBanos(cantidadBanos);
         propiedad.setPermitidoMascotas(permitidoMascotas);
         propiedad.setPiscina(piscina);
@@ -86,7 +86,7 @@ class PropiedadTest {
         assertEquals(municipio, propiedad.getMunicipio());
         assertEquals(nombre, propiedad.getNombre());
         assertEquals(descripcion, propiedad.getDescripcion());
-        assertEquals(cantidadHabitaciones, propiedad.getCantitadHabitaciones());
+        assertEquals(cantidadHabitaciones, propiedad.getCantidadHabitaciones());
         assertEquals(cantidadBanos, propiedad.getCantidadBanos());
         assertEquals(permitidoMascotas, propiedad.isPermitidoMascotas());
         assertEquals(piscina, propiedad.isPiscina());
