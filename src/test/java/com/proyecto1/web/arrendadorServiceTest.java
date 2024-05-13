@@ -154,4 +154,59 @@ public class arrendadorServiceTest {
         verify(arrendadorRepository).save(arrendadorEntity);
     }
 
+    @Test
+    public void testUpdateArrendadorPassword() {
+        // Arrange
+        Long id = 11L;
+        arrendador_dto arrendadorDto = new arrendador_dto(id, "test", "test", "test@javeriana.edu.com", "111111", "qwerty3444", false);
+        arrendador existingArrendador = new arrendador(id, "test", "test", "test@javeriana.edu.com", "111111", "qwety344", true);
+
+        when(arrendadorRepository.existsById(id)).thenReturn(true);
+        when(modelMapper.map(arrendadorDto, arrendador.class)).thenReturn(existingArrendador);
+        when(arrendadorRepository.save(any(arrendador.class))).thenReturn(existingArrendador);
+        when(modelMapper.map(existingArrendador, arrendador_dto.class)).thenReturn(arrendadorDto); // Esta línea asegura que el objeto actualizado se mapee correctamente de vuelta a arrendador_dto
+
+        // Act
+        arrendador_dto updatedArrendador = arrendadorService.update(arrendadorDto);
+
+        // Assert
+        assertNotNull(updatedArrendador); // Verificar que updatedArrendador no sea null
+        assertEquals(arrendadorDto.getContrasena(), updatedArrendador.getContrasena()); // Verificar que la contraseña se haya actualizado correctamente
+        verify(arrendadorRepository, times(1)).save(existingArrendador);
+    }
+
+    @Test
+    public void testDeleteArrendador() {
+        // Arrange
+        Long id = 12L;
+        when(arrendadorRepository.existsById(id)).thenReturn(true);
+
+        // Act
+        arrendadorService.delete(id);
+
+        // Assert
+        verify(arrendadorRepository, times(1)).deleteById(id);
+    }
+
+    @Test
+    public void testSaveArrendador() {
+        // Arrange
+        arrendador_dto arrendadorDto = new arrendador_dto(1L, "Nombre Test", "Apellido Test", "correo@test.com", "12345678", "contraseñaTest", true);
+        arrendador arrendadorEntity = new arrendador(1L, "Nombre Test", "Apellido Test", "correo@test.com", "12345678", "contraseñaTest", true);
+
+        when(modelMapper.map(arrendadorDto, arrendador.class)).thenReturn(arrendadorEntity);
+        when(arrendadorRepository.save(arrendadorEntity)).thenReturn(arrendadorEntity);
+        when(modelMapper.map(arrendadorEntity, arrendador_dto.class)).thenReturn(arrendadorDto);
+
+        // Act
+        arrendador_dto result = arrendadorService.save(arrendadorDto);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(arrendadorDto.getId_arrendador(), result.getId_arrendador());
+        assertEquals(arrendadorDto.getNombres(), result.getNombres());
+        // ... Verificar el resto de los campos
+        verify(arrendadorRepository, times(1)).save(arrendadorEntity);
+    }
+
 }

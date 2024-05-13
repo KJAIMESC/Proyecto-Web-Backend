@@ -34,7 +34,7 @@ class PropiedadDTOTest {
         propiedadDTO.setMunicipio(municipio);
         propiedadDTO.setNombre(nombre);
         propiedadDTO.setDescripcion(descripcion);
-        propiedadDTO.setCantitadHabitaciones(cantidadHabitaciones);
+        propiedadDTO.setCantidadHabitaciones(cantidadHabitaciones);
         propiedadDTO.setCantidadBanos(cantidadBanos);
         propiedadDTO.setPermitidoMascotas(permitidoMascotas);
         propiedadDTO.setPiscina(piscina);
@@ -51,7 +51,7 @@ class PropiedadDTOTest {
         assertEquals(municipio, propiedadDTO.getMunicipio());
         assertEquals(nombre, propiedadDTO.getNombre());
         assertEquals(descripcion, propiedadDTO.getDescripcion());
-        assertEquals(cantidadHabitaciones, propiedadDTO.getCantitadHabitaciones());
+        assertEquals(cantidadHabitaciones, propiedadDTO.getCantidadHabitaciones());
         assertEquals(cantidadBanos, propiedadDTO.getCantidadBanos());
         assertEquals(permitidoMascotas, propiedadDTO.isPermitidoMascotas());
         assertEquals(piscina, propiedadDTO.isPiscina());

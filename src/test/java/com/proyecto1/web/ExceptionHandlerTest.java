@@ -14,6 +14,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ExceptionHandlerTest {
 
@@ -142,4 +143,5 @@ public class ExceptionHandlerTest {
         assertEquals("La referencia a Propiedad en Solicitudes es inválida o no existe.", apiError.getMessage());
         assertEquals("Referencia a Propiedad Inválida", apiError.getError());
     }
+
 }
