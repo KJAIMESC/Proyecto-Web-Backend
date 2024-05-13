@@ -18,8 +18,6 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.condition.RequestMethodsRequestCondition;
 
-import co.edu.javeriana.security.jwt.filter.JWTAuthorizationFilter;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig implements ISecurityConfig {
@@ -28,7 +26,7 @@ public class SecurityConfig implements ISecurityConfig {
 
 
     @Autowired
-    private JWTAuthorizationFilter jwtAuthorizationFilter;
+    private com.proyecto1.web.filter.JWTAuthorizationFilter jwtAuthorizationFilter;
 
 	@Override
     @Bean

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.proyecto1.web.security.CustomUserDetailsService;
+import com.proyecto1.web.services.JWTTokenService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -31,7 +33,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter{
 
     public static final String HEADER = "Authorization";
 	public static final String PREFIX = "Bearer ";
-	|
+	
     @Autowired
 	private CustomUserDetailsService userDetailsService;
 
