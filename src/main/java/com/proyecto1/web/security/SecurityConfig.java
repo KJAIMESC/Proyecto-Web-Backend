@@ -58,7 +58,11 @@ public class SecurityConfig implements ISecurityConfig {
             new AntPathRequestMatcher("/jwt/security/autenticar/**", HttpMethod.GET.name()),
             new AntPathRequestMatcher("/jwt/security/autenticar/**", HttpMethod.POST.name()),
             new AntPathRequestMatcher("/jwt/security/autenticar/**", HttpMethod.PUT.name()),
-            new AntPathRequestMatcher("/jwt/security/autenticar/**", HttpMethod.DELETE.name())
+            new AntPathRequestMatcher("/jwt/security/autenticar/**", HttpMethod.DELETE.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/arrendador/**", HttpMethod.GET.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/arrendador/**", HttpMethod.POST.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/arrendador/**", HttpMethod.PUT.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/arrendador/**", HttpMethod.DELETE.name())
         );
     }
 }

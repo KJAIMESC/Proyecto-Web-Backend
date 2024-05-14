@@ -6,10 +6,12 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.proyecto1.web.dto.propiedad_dto;
+import com.proyecto1.web.dto.usuario_dto;
 import com.proyecto1.web.entities.propiedad;
 import com.proyecto1.web.repositories.propiedad_repository;
 
@@ -78,5 +80,15 @@ public class propiedad_service {
             throw new IllegalArgumentException(message + id + noPuedeSEEEERRR);
         }
         propiedad_repository.deleteById(id);
+    }
+
+    @Transactional
+    public List<propiedad_dto> getAllPropertiesForAuthenticatedUser() {
+        usuario_dto authenticatedUser = (usuario_dto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long authenticatedUserId = authenticatedUser.getId();
+        List<propiedad> propiedadList = propiedad_repository.findAllByArrendador_IdArrendadorFk(authenticatedUserId);
+        return propiedadList.stream()
+                .map(propiedad -> modelMapper.map(propiedad, propiedad_dto.class))
+                .collect(Collectors.toList());
     }
 }

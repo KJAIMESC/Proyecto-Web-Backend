@@ -15,4 +15,5 @@ public class usuario_dto {
     private String nombres;
     private String apellidos;
     private String correo;
+    private String contrasena;
 }

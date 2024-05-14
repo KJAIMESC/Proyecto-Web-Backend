@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.proyecto1.web.dto.arrendatario_dto;
@@ -16,6 +17,9 @@ import com.proyecto1.web.repositories.arrendatario_repository;
 public class arrendatario_service {
     arrendatario_repository arrendatario_repository;
     ModelMapper modelMapper;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     private String message = "El arrendatario con ID: ";
     private String noExiste = " no existe";
@@ -51,6 +55,8 @@ public class arrendatario_service {
         if (arrendatario_dto.getContrasena().length() < 8) {
             throw new IllegalArgumentException(errorContrasena);
         }
+        String contrasena = passwordEncoder.encode(arrendatario_dto.getContrasena());
+        arrendatario_dto.setContrasena(contrasena);
         arrendatario arrendatario = modelMapper.map(arrendatario_dto, arrendatario.class);
         arrendatario = arrendatario_repository.save(arrendatario);
         return modelMapper.map(arrendatario, arrendatario_dto.class);
@@ -66,6 +72,8 @@ public class arrendatario_service {
         if (arrendatario_dto.getContrasena().length() < 8) {
             throw new IllegalArgumentException(errorContrasena);
         }
+        String contrasena = passwordEncoder.encode(arrendatario_dto.getContrasena());
+        arrendatario_dto.setContrasena(contrasena);
         arrendatario arrendatario = modelMapper.map(arrendatario_dto, arrendatario.class);
         arrendatario = arrendatario_repository.save(arrendatario);
         return modelMapper.map(arrendatario, arrendatario_dto.class);
