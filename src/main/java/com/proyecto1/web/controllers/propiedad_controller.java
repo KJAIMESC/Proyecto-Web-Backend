@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.proyecto1.web.dto.propiedad_dto;
+import com.proyecto1.web.entities.propiedad;
 import com.proyecto1.web.services.propiedad_service;
 
 @RestController
@@ -56,5 +57,10 @@ public class propiedad_controller {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void delete(@PathVariable Long id){
         propiedad_service.delete(id);
+    }
+
+    @GetMapping("/user")
+    public List<propiedad_dto> getAllPropertiesForAuthenticatedUser() {
+        return propiedad_service.getAllPropertiesForAuthenticatedUser();
     }
 }

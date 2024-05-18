@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,11 +85,16 @@ public class propiedad_service {
 
     @Transactional
     public List<propiedad_dto> getAllPropertiesForAuthenticatedUser() {
-        usuario_dto authenticatedUser = (usuario_dto) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long authenticatedUserId = authenticatedUser.getId();
-        List<propiedad> propiedadList = propiedad_repository.findAllByArrendador_IdArrendadorFk(authenticatedUserId);
-        return propiedadList.stream()
-                .map(propiedad -> modelMapper.map(propiedad, propiedad_dto.class))
-                .collect(Collectors.toList());
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails) {
+            UserDetails userDetails = (UserDetails) principal;
+            Long authenticatedUserId = Long.parseLong(userDetails.getUsername());
+            List<propiedad> propiedadList = propiedad_repository.findAllByArrendador_IdArrendador(authenticatedUserId);
+            return propiedadList.stream()
+                    .map(propiedad -> modelMapper.map(propiedad, propiedad_dto.class))
+                    .collect(Collectors.toList());
+        } else {
+            throw new IllegalStateException("Unexpected principal type");
+        }
     }
 }
