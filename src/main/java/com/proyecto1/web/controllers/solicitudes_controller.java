@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.proyecto1.web.dto.propiedad_dto;
 import com.proyecto1.web.dto.solicitudes_dto;
 import com.proyecto1.web.services.solicitudes_service;
 
@@ -49,5 +50,10 @@ public class solicitudes_controller {
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public void delete(@PathVariable Long id){
         solicitudes_service.delete(id);
+    }
+
+    @GetMapping("/user")
+    public List<solicitudes_dto> getAllSolicitudesForAuthenticatedUser() {
+        return solicitudes_service.getAllSolicitudesForAuthenticatedUser();
     }
 }

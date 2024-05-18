@@ -66,7 +66,23 @@ public class SecurityConfig implements ISecurityConfig {
             new AntPathRequestMatcher("/api/grupo1_6/proyecto1/propiedad/**", HttpMethod.GET.name()),
             new AntPathRequestMatcher("/api/grupo1_6/proyecto1/propiedad/**", HttpMethod.POST.name()),
             new AntPathRequestMatcher("/api/grupo1_6/proyecto1/propiedad/**", HttpMethod.PUT.name()),
-            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/propiedad/**", HttpMethod.DELETE.name())
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/propiedad/**", HttpMethod.DELETE.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/arrendatario/**", HttpMethod.GET.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/arrendatario/**", HttpMethod.POST.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/arrendatario/**", HttpMethod.PUT.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/arrendatario/**", HttpMethod.DELETE.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/solicitudes/**", HttpMethod.GET.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/solicitudes/**", HttpMethod.POST.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/solicitudes/**", HttpMethod.PUT.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/solicitudes/**", HttpMethod.DELETE.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/tipoIngreso/**", HttpMethod.GET.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/tipoIngreso/**", HttpMethod.POST.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/tipoIngreso/**", HttpMethod.PUT.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/tipoIngreso/**", HttpMethod.DELETE.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/estadosolicitud/**", HttpMethod.GET.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/estadosolicitud/**", HttpMethod.POST.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/estadosolicitud/**", HttpMethod.PUT.name()),
+            new AntPathRequestMatcher("/api/grupo1_6/proyecto1/estadosolicitud/**", HttpMethod.DELETE.name())
         );
     }
 }
