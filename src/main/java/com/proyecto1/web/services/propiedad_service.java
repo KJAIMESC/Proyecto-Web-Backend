@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proyecto1.web.dto.propiedad_dto;
+import com.proyecto1.web.entities.arrendador;
 import com.proyecto1.web.entities.propiedad;
 import com.proyecto1.web.repositories.propiedad_repository;
 
@@ -101,6 +102,32 @@ public class propiedad_service {
             return propiedadList.stream()
                     .map(propiedad -> modelMapper.map(propiedad, propiedad_dto.class))
                     .collect(Collectors.toList());
+        } else {
+            throw new IllegalStateException("Unexpected principal type: " + principal.getClass().getName());
+        }
+    }
+
+    @Transactional
+    public propiedad_dto saveForAuthenticatedUser(propiedad_dto propiedadDto) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof String) {
+            String jsonString = (String) principal;
+            Long authenticatedUserId;
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                JsonNode jsonNode = objectMapper.readTree(jsonString);
+                authenticatedUserId = jsonNode.get("id").asLong();
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to parse JSON string: " + jsonString, e);
+            }
+
+            propiedad propiedad = modelMapper.map(propiedadDto, propiedad.class);
+            arrendador arrendador = new arrendador();
+            arrendador.setId_arrendador(authenticatedUserId);
+            propiedad.setArrendador(arrendador);
+
+            propiedad = propiedad_repository.save(propiedad);
+            return modelMapper.map(propiedad, propiedad_dto.class);
         } else {
             throw new IllegalStateException("Unexpected principal type: " + principal.getClass().getName());
         }

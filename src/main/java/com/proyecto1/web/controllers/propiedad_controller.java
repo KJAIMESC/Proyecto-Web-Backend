@@ -3,7 +3,9 @@ package com.proyecto1.web.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,5 +64,11 @@ public class propiedad_controller {
     @GetMapping("/user")
     public List<propiedad_dto> getAllPropertiesForAuthenticatedUser() {
         return propiedad_service.getAllPropertiesForAuthenticatedUser();
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<propiedad_dto> createPropertyForAuthenticatedUser(@RequestBody propiedad_dto propiedadDto) {
+        propiedad_dto savedProperty = propiedad_service.saveForAuthenticatedUser(propiedadDto);
+        return new ResponseEntity<>(savedProperty, HttpStatus.CREATED);
     }
 }

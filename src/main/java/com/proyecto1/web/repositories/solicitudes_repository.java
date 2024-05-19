@@ -10,4 +10,6 @@ import com.proyecto1.web.entities.solicitudes;
 public interface solicitudes_repository extends CrudRepository<solicitudes, Long>{
     @Query("SELECT p FROM solicitudes p WHERE p.arrendatario.id_arrendatario = ?1")
     List<solicitudes> findAllByAuthenticatedUserId(Long authenticatedUserId);
+    @Query("SELECT s FROM solicitudes s WHERE s.propiedad.id_propiedad = ?1")
+    List<solicitudes> findAllByPropiedadIdPropiedad(Long idPropiedad);
 }

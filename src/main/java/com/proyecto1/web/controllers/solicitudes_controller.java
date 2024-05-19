@@ -3,7 +3,10 @@ package com.proyecto1.web.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,5 +58,16 @@ public class solicitudes_controller {
     @GetMapping("/user")
     public List<solicitudes_dto> getAllSolicitudesForAuthenticatedUser() {
         return solicitudes_service.getAllSolicitudesForAuthenticatedUser();
+    }
+
+    @GetMapping("/propiedad/{idPropiedad}")
+    public List<solicitudes_dto> getAllSolicitudesByPropiedadId(@PathVariable Long idPropiedad) {
+        return solicitudes_service.getAllSolicitudesByPropiedadId(idPropiedad);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<solicitudes_dto> createSolicitudForAuthenticatedUser(@RequestBody solicitudes_dto solicitudesDto) {
+        solicitudes_dto savedSolicitud = solicitudes_service.saveForAuthenticatedUser(solicitudesDto);
+        return new ResponseEntity<>(savedSolicitud, HttpStatus.CREATED);
     }
 }
