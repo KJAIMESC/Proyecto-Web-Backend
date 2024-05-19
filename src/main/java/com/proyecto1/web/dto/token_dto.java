@@ -25,4 +25,5 @@ public class token_dto {
     }
     public String accType;
     public String nombres;
+    public long id;
 }
