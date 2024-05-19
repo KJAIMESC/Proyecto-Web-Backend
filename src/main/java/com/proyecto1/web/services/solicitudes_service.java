@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proyecto1.web.dto.solicitudes_dto;
 import com.proyecto1.web.entities.EstadoSolicitud;
 import com.proyecto1.web.entities.arrendatario;
+import com.proyecto1.web.entities.propiedad;
 import com.proyecto1.web.entities.solicitudes;
 import com.proyecto1.web.repositories.EstadoSolicitud_repository;
+import com.proyecto1.web.repositories.propiedad_repository;
 import com.proyecto1.web.repositories.solicitudes_repository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.temporal.ChronoUnit;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -23,6 +27,7 @@ public class solicitudes_service {
 
     private final solicitudes_repository solicitudes_repository;
     private final EstadoSolicitud_repository estadoSolicitud_repository;
+    private final propiedad_repository propiedad_repository;
     private final ModelMapper modelMapper;
 
     private final String message = "La solicitud con ID: ";
@@ -30,9 +35,10 @@ public class solicitudes_service {
     private final String noPuedeSEEEERRR = " no existe y por lo tanto no puede ser eliminada";
 
     @Autowired
-    public solicitudes_service(solicitudes_repository solicitudes_repository, EstadoSolicitud_repository estadoSolicitud_repository, ModelMapper modelMapper) {
+    public solicitudes_service(solicitudes_repository solicitudes_repository, EstadoSolicitud_repository estadoSolicitud_repository, propiedad_repository propiedad_repository, ModelMapper modelMapper) {
         this.solicitudes_repository = solicitudes_repository;
         this.estadoSolicitud_repository = estadoSolicitud_repository;
+        this.propiedad_repository = propiedad_repository;
         this.modelMapper = modelMapper;
     }
 
@@ -141,6 +147,29 @@ public class solicitudes_service {
             EstadoSolicitud defaultEstadoSolicitud = estadoSolicitud_repository.findById(1L)
                     .orElseThrow(() -> new IllegalArgumentException("Default EstadoSolicitud ID: 1 not found"));
             solicitudes.setEstadoSolicitud(defaultEstadoSolicitud);
+
+            // Set the current date and time for fechaSolicitud and horaSolicitud
+            LocalDateTime now = LocalDateTime.now();
+            solicitudes.setFechaSolicitud(now);
+            solicitudes.setHoraSolicitud(now);
+
+            // Default calificacion to 0
+            solicitudes.setCalificacion(0.0);
+
+            // Fetch the propiedad to get valorNoche
+            final Long propiedadId = solicitudes.getPropiedad().getId_propiedad();
+            propiedad propiedad = propiedad_repository.findById(propiedadId)
+                    .orElseThrow(() -> new IllegalArgumentException("Invalid Propiedad ID: " + propiedadId));
+
+            // Calculate the valor
+            long daysBetween = ChronoUnit.DAYS.between(solicitudes.getFechaLlegada(), solicitudes.getFechaSalida());
+            double valorNoche = propiedad.getValorNoche();
+
+            // Print the daysBetween and valorNoche values
+            System.out.println("Days between: " + daysBetween);
+            System.out.println("Valor por noche: " + valorNoche);
+
+            solicitudes.setValor(daysBetween * valorNoche);
 
             solicitudes = solicitudes_repository.save(solicitudes);
             return modelMapper.map(solicitudes, solicitudes_dto.class);
