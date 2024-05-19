@@ -58,4 +58,15 @@ public class arrendatario_controller {
         arrendatario_service.delete(id);
     }
 
+    // UPDATE ARRENDATARIO BY AUTHENTICATED USER
+    @PutMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE)
+    public arrendatario_dto updateForAuthenticatedUser(@RequestBody arrendatario_dto arrendatario_dto) {
+        return arrendatario_service.updateForAuthenticatedUser(arrendatario_dto);
+    }
+
+    // DELETE ARRENDATARIO BY AUTHENTICATED USER
+    @DeleteMapping(value = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void deleteForAuthenticatedUser() {
+        arrendatario_service.deleteForAuthenticatedUser();
+    }
 }
