@@ -36,7 +36,7 @@ public class UsuarioService {
             arrendador arrendador = arrendadorOptional.get();
             if (passwordEncoder.matches(contrasena, arrendador.getContrasena())) {
                 System.out.println("Contrasena correcta");
-                usuarioDTO = Optional.of(new usuario_dto(arrendador.getId_arrendador(), arrendador.getNombres(), arrendador.getApellidos(), arrendador.getCorreo(), arrendador.getContrasena()));
+                usuarioDTO = Optional.of(new usuario_dto(arrendador.getId_arrendador(), arrendador.getNombres(), arrendador.getApellidos(), arrendador.getCorreo(), arrendador.getContrasena(), "Arrendador"));
             }
         }
 
@@ -47,7 +47,7 @@ public class UsuarioService {
                 arrendatario arrendatario = arrendatarioOptional.get();
                 if (passwordEncoder.matches(contrasena, arrendatario.getContrasena())) {
                     System.out.println("Contrasena correcta");
-                    usuarioDTO = Optional.of(new usuario_dto(arrendatario.getId_arrendatario(), arrendatario.getNombres(), arrendatario.getApellidos(), arrendatario.getCorreo(), arrendatario.getContrasena()));
+                    usuarioDTO = Optional.of(new usuario_dto(arrendatario.getId_arrendatario(), arrendatario.getNombres(), arrendatario.getApellidos(), arrendatario.getCorreo(), arrendatario.getContrasena(), "Arrendatario"));
                 }
             }
         }

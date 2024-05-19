@@ -26,7 +26,7 @@ public class Autenticacion_controller {
     @CrossOrigin
     @PostMapping(value = "/generarToken", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public token_dto generarToken(@RequestBody usuario_dto usuarioDTO) {
-        return new token_dto(jwtTokenService.generarToken(usuarioDTO), usuarioDTO);
+        return new token_dto(jwtTokenService.generarToken(usuarioDTO), usuarioDTO, usuarioDTO.getTipo());
     }
 
     @CrossOrigin
@@ -43,7 +43,7 @@ public class Autenticacion_controller {
                 System.out.println("User authentication successful");
                 // User authentication successful, generate JWT token
                 String token = jwtTokenService.generarToken(usuarioDTO.get());
-                token_dto tokenDTO = new token_dto(token, usuarioDTO.get());
+                token_dto tokenDTO = new token_dto(token, usuarioDTO.get(), usuarioDTO.get().getTipo());
                 return ResponseEntity.ok(tokenDTO);
             }
         }

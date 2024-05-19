@@ -23,4 +23,5 @@ public class token_dto {
     public Date getDate(){
         return Calendar.getInstance().getTime();
     }
+    public String accType;
 }
