@@ -177,4 +177,17 @@ public class solicitudes_service {
             throw new IllegalStateException("Unexpected principal type: " + principal.getClass().getName());
         }
     }
+
+    // UPDATE CALIFICACION ONLY
+    @Transactional
+    public solicitudes_dto updateCalificacion(Long id, double calificacion) {
+        Optional<solicitudes> solicitudes_optional = solicitudes_repository.findById(id);
+        if (!solicitudes_optional.isPresent()) {
+            throw new IllegalArgumentException(message + id + noExiste);
+        }
+        solicitudes solicitudes = solicitudes_optional.get();
+        solicitudes.setCalificacion(calificacion);
+        solicitudes = solicitudes_repository.save(solicitudes);
+        return modelMapper.map(solicitudes, solicitudes_dto.class);
+    }
 }

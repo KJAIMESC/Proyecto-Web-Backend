@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -69,5 +70,12 @@ public class solicitudes_controller {
     public ResponseEntity<solicitudes_dto> createSolicitudForAuthenticatedUser(@RequestBody solicitudes_dto solicitudesDto) {
         solicitudes_dto savedSolicitud = solicitudes_service.saveForAuthenticatedUser(solicitudesDto);
         return new ResponseEntity<>(savedSolicitud, HttpStatus.CREATED);
+    }
+
+    // UPDATE CALIFICACION ONLY
+    @PutMapping(value = "/updateCalificacion/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<solicitudes_dto> updateCalificacion(@PathVariable Long id, @RequestBody double calificacion) {
+        solicitudes_dto updatedSolicitud = solicitudes_service.updateCalificacion(id, calificacion);
+        return new ResponseEntity<>(updatedSolicitud, HttpStatus.OK);
     }
 }
